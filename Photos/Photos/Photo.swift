@@ -9,17 +9,21 @@
 import Foundation
 
 class Photo {
-    /* The number of likes the photo has. */
     var likes : Int!
-    /* The string of the url to the photo file. */
     var url : String!
-    /* The username of the photographer. */
     var username : String!
-
-    /* Parses a NSDictionary and creates a photo object. */
-    init (data: NSDictionary) {
-        // FILL ME IN
-        // HINT: use nested .valueForKey() calls, and then cast using 'as! TYPE'
+    var postDate : NSDate!
+    var liked : Bool!
+    
+    
+    init (data: NSDictionary)
+    {
+        self.username = data.valueForKey("user")?.valueForKey("username") as! String
+        self.url = data.valueForKey("images")?.valueForKey("standard_resolution")?.valueForKey("url") as! String
+        self.likes = data.valueForKey("likes")?.valueForKey("count") as! Int
+        self.liked = false
+        let i = data["created_time"] as! String
+        postDate = NSDate(timeIntervalSince1970: Double(i)!)
     }
-
-}
+    
+};
